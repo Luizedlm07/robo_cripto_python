@@ -1,7 +1,7 @@
 
 
 def condition_trade(moeda, cont, arr_ma14, arr_ma36, valor_atual, comprar, vender):
-    from variaveis import lucro, lucro_porcentagem, lucro_total
+    from variaveis import lucro, lucro_porcentagem
     import trade
     if cont > 1 and comprar == True:
 

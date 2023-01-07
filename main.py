@@ -12,7 +12,7 @@ from variaveis import *
 client = Client(api_key, api_secret)
 
 relatorio_1 = open('relatorio.txt', 'w')
-relatorio_1.write("Hora atual, Cotação, Posicionado?, Lucro, Porcentagem de lucro, Lucro total\n")
+relatorio_1.write("Hora atual, Cotação BNB, Cotação SOL, Cotação ADA, Posição, Lucro, Porcentagem de lucro, Lucro total\n")
 relatorio_1.close()
 
 
@@ -72,7 +72,7 @@ while True:
     cotacao=valor_atual_bnb, 
     cotacao2=valor_atual_sol,
     cotacao3=valor_atual_ada,
-    posicionado=posicionado,
+    posicionado=moeda_atual,
     lucro=lucro,
     lucro_porcentagem=lucro_porcentagem,
     lucro_total=lucro_total

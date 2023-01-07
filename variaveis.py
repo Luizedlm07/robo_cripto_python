@@ -1,6 +1,4 @@
 
-
-posicionado = True
 cont = 0
 lucro = 0
 lucro_porcentagem = 0.0
