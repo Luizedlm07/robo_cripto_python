@@ -16,3 +16,4 @@ comprado = 0
 bnbETH = 'BNBETH'
 solBNB = 'SOLBNB'
 adaBNB = 'ADABNB'
+lista_moedas = ['BNBETH', 'SOLBNB', 'ADABNB']
