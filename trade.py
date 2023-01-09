@@ -3,22 +3,39 @@ from binance.enums import *
 from binance.client import Client
 from binance import exceptions
 
-def comprar(moeda):
+def comprar(moeda, moeda_atual):
     from variaveis import diminuir_valor
     _ = 0
-    while _ == 0:
-        diminuir_valor -= 0.001
-        try: 
-            order = client.create_order(
-                symbol=moeda,
-                side=SIDE_BUY,
-                type=ORDER_TYPE_MARKET,
-                quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
-                )
-            _ = 1
-        except exceptions.BinanceAPIException:
-            print("Tentando comprar...")
-            continue
+    if moeda_atual == 'BNB':
+        while _ == 0:
+            diminuir_valor -= 0.001
+            try: 
+                order = client.create_order(
+                    symbol=moeda,
+                    side=SIDE_BUY,
+                    type=ORDER_TYPE_MARKET,
+                    quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
+                    )
+                _ = 1
+            except exceptions.BinanceAPIException:
+                print("Tentando comprar...")
+                continue
+
+    if moeda_atual == 'ETH':
+        while _ == 0:
+            diminuir_valor -= 0.001
+            try: 
+                order = client.create_order(
+                    symbol=moeda,
+                    side=SIDE_BUY,
+                    type=ORDER_TYPE_MARKET,
+                    quoteOrderQty=f'{float(saldoETH * diminuir_valor):.8f}'
+                    )
+                _ = 1
+            except exceptions.BinanceAPIException:
+                print("Tentando comprar...")
+                continue
+
     return order
 
 

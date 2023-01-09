@@ -1,4 +1,4 @@
-def bnb_eth_compram(moeda, arr_ma14, arr_ma36, valor_atual):
+def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
 
     import trade
     from escrever_relatorio import relatorio_trade
@@ -8,7 +8,7 @@ def bnb_eth_compram(moeda, arr_ma14, arr_ma36, valor_atual):
 
     if arr_ma14[-2] < arr_ma36[-2] and arr_ma14[-1] > arr_ma36[-1]:
         
-        order = trade.comprar(moeda)
+        order = trade.comprar(moeda, moeda_atual)
         valor_compra = valor_atual
         comprado = 1
         

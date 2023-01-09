@@ -92,6 +92,7 @@ while True:
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
+                    moeda_atual,
                     arr_ma14_bnbETH,
                     arr_ma36_bnbETH,
                     valor_atual_bnbETH
@@ -101,6 +102,7 @@ while True:
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
+                    moeda_atual,
                     arr_ma14_solETH,
                     arr_ma36_solETH,
                     valor_atual_solETH
@@ -110,11 +112,12 @@ while True:
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
+                    moeda_atual,
                     arr_ma14_adaETH,
                     arr_ma36_adaETH,
                     valor_atual_adaETH
                     )
-                    
+
             comprado = 0
 
         if moeda_atual == 'SOL':
