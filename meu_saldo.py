@@ -31,18 +31,14 @@ def saldo():
 
     if maior_saldo == meu_saldoETH:
         moeda_atual = 'ETH'
-        comprar = True
 
     if maior_saldo == meu_saldoBNB:
         moeda_atual = 'BNB'
-        vender = True
 
     if maior_saldo == meu_saldoADA:
         moeda_atual = 'ADA'
-        vender = True
 
     if maior_saldo == meu_saldoSOL:
         moeda_atual = 'SOL'
-        vender = True
 
     return meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL, moeda_atual, comprar, vender
