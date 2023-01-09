@@ -23,8 +23,6 @@ def saldo():
     maior_saldo = 0
     moeda_atual = ''
 
-    comprar = False
-    vender = False
 
     for saldo in lista_saldos:
         maior_saldo = saldo if saldo > maior_saldo else maior_saldo

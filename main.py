@@ -19,7 +19,8 @@ print("Robô iniciado.\n")
 
 while True:
     import condicao_trade
-    
+    info = client.get_symbol_info('ADABNB')
+    print(info)
     hora_atual = datetime.datetime.now()
     hora_atual = (f"{hora_atual.hour}:{hora_atual.minute}:{hora_atual.second}")
 

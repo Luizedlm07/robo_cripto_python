@@ -92,7 +92,7 @@ def trade_ada(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma
 
             order = trade.vender('ADAETH', saldo)
             print(order)
-            relatorio_trade()
+            relatorio_trade(order)
 
             lucro = valor_atual - valor_compra
             lucro_porcentagem = lucro / valor_compra * 100

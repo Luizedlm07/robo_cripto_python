@@ -60,20 +60,20 @@ def vender(moeda, saldo):
             symbol=moeda,
             side=SIDE_SELL,
             type=ORDER_TYPE_MARKET,
-            quantity=f'{float(saldo * diminuir_valor):.8f}'
+            quoteOrderQty=f'{float(1 * diminuir_valor):.8f}'
             )
             _ = 1
         except exceptions.BinanceAPIException:
             print("Tentando vender...")
             cont += 1
-            if cont <= 20:
-                continue
-            else: 
-                order = client.create_order(
-                symbol=moeda,
-                side=SIDE_SELL,
-                type=ORDER_TYPE_MARKET,
-                quantity=f'{float(saldo * diminuir_valor):.8f}'
-                )
+            # if cont <= 30:
+            #     continue
+            # else: 
+            #     order = client.create_order(
+            #     symbol=moeda,
+            #     side=SIDE_SELL,
+            #     type=ORDER_TYPE_MARKET,
+            #     quantity=f'{float(saldo * diminuir_valor):.8f}'
+            #     )
 
     return order
