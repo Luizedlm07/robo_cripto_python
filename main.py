@@ -34,9 +34,9 @@ while True:
 
     print("Meus ativos: " )
     print("Meu saldo BNB = ", saldoBNB)
-    print("Meu saldo ETH = ", saldoETH,)
-    print("Meu saldo ADA = ", saldoADA,)
-    print("Meu saldo SOL = ", saldoSOL,)
+    print("Meu saldo ETH = ", saldoETH)
+    print("Meu saldo ADA = ", saldoADA)
+    print("Meu saldo SOL = ", saldoSOL, "\n")
 
     arr_ma14_bnbETH.append(ma14_bnbETH)
     arr_ma36_bnbETH.append(ma36_bnbETH)
@@ -118,8 +118,6 @@ while True:
 
     cont += 1
 
-    print("O código rodou:", cont, "vez(es).")
-
     relatorio(
     hora_atual=hora_atual, 
     cotacao=valor_atual_bnbETH, 
@@ -130,5 +128,7 @@ while True:
     lucro_porcentagem=lucro_porcentagem,
     lucro_total=lucro_total
     )
+
+    print("O código rodou:", cont, "vez(es).")
 
     time.sleep(60)

@@ -17,7 +17,7 @@ def bnb_eth_compram(moeda, arr_ma14, arr_ma36, valor_atual):
 
     else:
 
-        print("Não comprou.\n")
+        print("Não comprou.")
 
     return valor_compra, comprado
 
