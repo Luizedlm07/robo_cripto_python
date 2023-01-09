@@ -41,6 +41,7 @@ def comprar(moeda, moeda_atual):
 
 def vender(moeda, saldo):
     from variaveis import diminuir_valor
+    cont = 0
     _ = 0
     while _ == 0:
         diminuir_valor -= 0.001
@@ -49,10 +50,20 @@ def vender(moeda, saldo):
             symbol=moeda,
             side=SIDE_SELL,
             type=ORDER_TYPE_MARKET,
-            quoteOrderQty=f'{float(saldo * diminuir_valor):.8f}'
+            quantity=f'{float(saldo * diminuir_valor):.8f}'
             )
             _ = 1
         except exceptions.BinanceAPIException:
             print("Tentando vender...")
-            continue
+            cont += 1
+            if cont <= 20:
+                continue
+            else: 
+                order = client.create_order(
+                symbol=moeda,
+                side=SIDE_SELL,
+                type=ORDER_TYPE_MARKET,
+                quantity=f'{float(saldo * diminuir_valor):.8f}'
+                )
+
     return order

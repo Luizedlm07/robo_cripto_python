@@ -134,9 +134,7 @@ while True:
 
         if moeda_atual == 'ADA':
 
-            moeda_atual = 'ADABNB'
             lucro, lucro_porcentagem = condicao_trade.trade_ada(
-            moeda_atual, 
             saldoADA,
             valor_compra,
             valor_atual_adaBNB,
