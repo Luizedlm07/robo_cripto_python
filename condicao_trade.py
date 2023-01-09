@@ -109,7 +109,7 @@ def trade_ada(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma
 
         if valor_atual > valor_compra * 1.0025:
 
-            order = trade.vender('SOLBNB', saldo)
+            order = trade.vender('ADABNB', saldo)
             print(order)
             relatorio_trade()
 
@@ -118,7 +118,7 @@ def trade_ada(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma
 
         if arr_ma14ETH[-2] < arr_ma36ETH[-2] and arr_ma14ETH[-1] > arr_ma36ETH[-1]:
             
-            order = trade.vender('SOLETH')
+            order = trade.vender('ADAETH')
             valor_compra = valor_atual
             
             print(order)

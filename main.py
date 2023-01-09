@@ -6,6 +6,7 @@ from cotacao import cotacao
 from escrever_relatorio import relatorio
 from meu_saldo import saldo
 from variaveis import *
+from dados_relatorio import ultimo_trade
 
 client = Client(api_key, api_secret)
 
@@ -50,13 +51,14 @@ while True:
     arr_ma36_adaETH.append(ma36_adaETH)
 
     if cont < 1:
-        ultima_moeda = moeda_atual
-        if moeda_atual == 'ETH':
-            valor_compra = valor_atual_bnbETH
-        if moeda_atual == 'SOL':
-            valor_compra = valor_atual_solBNB
-        if moeda_atual == 'ADA':
-            valor_compra = valor_atual_adaBNB
+        ultima_moeda = 'BNB' if 'BNB' in ultimo_trade else 'ETH'
+        print("Ultima moeda: ", ultima_moeda)
+        # if moeda_atual == 'ETH':
+        #     valor_compra = valor_atual_bnbETH
+        # if moeda_atual == 'SOL':
+        #     valor_compra = valor_atual_solBNB
+        # if moeda_atual == 'ADA':
+        #     valor_compra = valor_atual_adaBNB
 
     if cont > 1:
 
@@ -68,6 +70,7 @@ while True:
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
+                    moeda_atual,
                     arr_ma14_solBNB,
                     arr_ma36_solBNB,
                     valor_atual_solBNB
@@ -77,6 +80,7 @@ while True:
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
+                    moeda_atual,
                     arr_ma14_adaBNB,
                     arr_ma36_adaBNB,
                     valor_atual_adaBNB

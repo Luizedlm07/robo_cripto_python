@@ -18,7 +18,7 @@ def saldo():
     meu_saldoADA = float(minhas_moedas[3]['free'])
     meu_saldoSOL = float(minhas_moedas[5]['free'])
 
-    lista_saldos = [meu_saldoBNB, meu_saldoETH]
+    lista_saldos = [meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL]
 
     maior_saldo = 0
     moeda_atual = ''

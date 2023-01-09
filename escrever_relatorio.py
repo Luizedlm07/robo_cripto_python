@@ -12,5 +12,5 @@ def relatorio(hora_atual, cotacao, cotacao2, cotacao3, posicionado, lucro, lucro
 def relatorio_trade(order):
 
     relatorio_order = open('relatorio_trade.txt', "a+")
-    relatorio_order.write("\n", order)
+    relatorio_order.write(f"\n{order}")
     relatorio_order.close()

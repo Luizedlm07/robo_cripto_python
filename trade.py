@@ -11,11 +11,11 @@ def comprar(moeda, moeda_atual):
             diminuir_valor -= 0.001
             try: 
                 order = client.create_order(
-                    symbol=moeda,
-                    side=SIDE_BUY,
-                    type=ORDER_TYPE_MARKET,
-                    quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
-                    )
+                symbol=moeda,
+                side=SIDE_BUY,
+                type=ORDER_TYPE_MARKET,
+                quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
+                )
                 _ = 1
             except exceptions.BinanceAPIException:
                 print("Tentando comprar...")
@@ -26,15 +26,25 @@ def comprar(moeda, moeda_atual):
             diminuir_valor -= 0.001
             try: 
                 order = client.create_order(
+                symbol=moeda,
+                side=SIDE_BUY,
+                type=ORDER_TYPE_MARKET,
+                quoteOrderQty=f'{float(saldoETH * diminuir_valor):.8f}'
+                )
+                _ = 1
+            except exceptions.BinanceAPIException:
+                print("Tentando comprar...")
+                cont += 1
+                if cont <= 20:
+                    continue
+                else:
+                    order = client.create_order(
                     symbol=moeda,
                     side=SIDE_BUY,
                     type=ORDER_TYPE_MARKET,
                     quoteOrderQty=f'{float(saldoETH * diminuir_valor):.8f}'
                     )
-                _ = 1
-            except exceptions.BinanceAPIException:
-                print("Tentando comprar...")
-                continue
+
 
     return order
 
