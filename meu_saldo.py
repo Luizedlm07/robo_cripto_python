@@ -41,4 +41,4 @@ def saldo():
     if maior_saldo == meu_saldoSOL:
         moeda_atual = 'SOL'
 
-    return meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL, moeda_atual, comprar, vender
+    return meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL, moeda_atual
