@@ -64,21 +64,31 @@ while True:
 
             for moeda in pares_bnb:
 
-                if comprado == 0:
+                if comprado == 0 and moeda == 'SOLBNB':
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
-                    arr_ma14_bnbETH,
-                    arr_ma36_bnbETH,
-                    valor_atual_bnbETH
+                    arr_ma14_solBNB,
+                    arr_ma36_solBNB,
+                    valor_atual_solBNB
                     )
+
+                if comprado == 0 and moeda == 'ADABNB':
+
+                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    moeda,
+                    arr_ma14_adaBNB,
+                    arr_ma36_adaBNB,
+                    valor_atual_adaBNB
+                    )
+
             comprado = 0
 
         if moeda_atual == 'ETH':
 
             for moeda in pares_eth:
 
-                if comprado == 0:
+                if comprado == 0 and moeda == 'BNBETH':
 
                     valor_compra, comprado = condicao_trade.bnb_eth_compram(
                     moeda,
@@ -86,6 +96,25 @@ while True:
                     arr_ma36_bnbETH,
                     valor_atual_bnbETH
                     )
+
+                if comprado == 0 and moeda == 'SOLETH':
+
+                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    moeda,
+                    arr_ma14_solETH,
+                    arr_ma36_solETH,
+                    valor_atual_solETH
+                    )
+
+                if comprado == 0 and moeda == 'ADAETH':
+
+                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    moeda,
+                    arr_ma14_adaETH,
+                    arr_ma36_adaETH,
+                    valor_atual_adaETH
+                    )
+                    
             comprado = 0
 
         if moeda_atual == 'SOL':
