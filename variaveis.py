@@ -25,5 +25,5 @@ adaETH = 'ADAETH'
 lista_moedas = ['BNBETH', 'SOLBNB','SOLETH', 'ADABNB', 'ADAETH']
 pares_sol = [lista_moedas[1], lista_moedas[2]]
 pares_ada = [lista_moedas[3], lista_moedas[4]]
-pares_bnb = [lista_moedas[0], lista_moedas[1], lista_moedas[3]]
+pares_bnb = [lista_moedas[1], lista_moedas[3]]
 pares_eth = [lista_moedas[0], lista_moedas[2], lista_moedas[3]]
