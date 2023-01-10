@@ -6,7 +6,7 @@ from cotacao import cotacao
 from escrever_relatorio import relatorio
 from meu_saldo import saldo
 from variaveis import *
-from dados_relatorio import ultimo_trade
+from dados_relatorio import ultimo_trade_moeda
 
 client = Client(api_key, api_secret)
 
@@ -19,8 +19,7 @@ print("Robô iniciado.\n")
 
 while True:
     import condicao_trade
-    info = client.get_symbol_info('ADABNB')
-    print(info)
+
     hora_atual = datetime.datetime.now()
     hora_atual = (f"{hora_atual.hour}:{hora_atual.minute}:{hora_atual.second}")
 
@@ -52,7 +51,8 @@ while True:
     arr_ma36_adaETH.append(ma36_adaETH)
 
     if cont < 1:
-        ultima_moeda = 'BNB' if 'BNB' in ultimo_trade else 'ETH'
+        ultima_moeda = 'BNB' if 'BNB' in ultimo_trade_moeda else 'ETH'
+        
         print("Ultima moeda: ", ultima_moeda)
         # if moeda_atual == 'ETH':
         #     valor_compra = valor_atual_bnbETH

@@ -2,6 +2,7 @@ def saldo():
 
     from main import client
     from variaveis import minhas_moedas
+    from dados_relatorio import ultimo_trade, ultimo_trade_moeda
 
     info = client.get_account()
 
@@ -18,25 +19,6 @@ def saldo():
     meu_saldoADA = float(minhas_moedas[3]['free'])
     meu_saldoSOL = float(minhas_moedas[5]['free'])
 
-    lista_saldos = [meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL]
-
-    maior_saldo = 0
-    moeda_atual = ''
-
-
-    for saldo in lista_saldos:
-        maior_saldo = saldo if saldo > maior_saldo else maior_saldo
-
-    if maior_saldo == meu_saldoETH:
-        moeda_atual = 'ETH'
-
-    if maior_saldo == meu_saldoBNB:
-        moeda_atual = 'BNB'
-
-    if maior_saldo == meu_saldoADA:
-        moeda_atual = 'ADA'
-
-    if maior_saldo == meu_saldoSOL:
-        moeda_atual = 'SOL'
+    moeda_atual = ultimo_trade_moeda[:3] if 'BUY' in ultimo_trade else ultimo_trade_moeda[3:]
 
     return meu_saldoBNB, meu_saldoETH, meu_saldoADA, meu_saldoSOL, moeda_atual

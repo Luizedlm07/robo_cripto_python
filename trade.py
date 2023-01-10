@@ -54,7 +54,7 @@ def vender(moeda, saldo):
     cont = 0
     _ = 0
     while _ == 0:
-        diminuir_valor -= 0.001
+        diminuir_valor -= 0.003
         try:
             order = client.create_order(
             symbol=moeda,
