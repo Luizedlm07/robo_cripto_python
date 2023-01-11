@@ -3,6 +3,7 @@ def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
     import trade
     from escrever_relatorio import relatorio_trade
     from main import valor_compra
+    from cotacao import cotacao
 
     comprado = 0
 
@@ -10,6 +11,16 @@ def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
         
         order = trade.comprar(moeda, moeda_atual)
         valor_compra = valor_atual
+        if 'BNB' in moeda:
+            if 'ADA' in moeda:
+                _, _, cotacao_outro_par = cotacao('ADAETH')
+            if 'SOL' in moeda:
+                _, _, cotacao_outro_par = cotacao('SOLETH')
+        if 'ETH' in moeda:
+            if 'ADA' in moeda:
+                _, _, cotacao_outro_par = cotacao('ADABNB')
+            if 'SOL' in moeda:
+                _, _, cotacao_outro_par = cotacao('ADABNB')
         comprado = 1
         
         print(order)
@@ -19,36 +30,28 @@ def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
 
         print("Não comprou.")
 
-    return valor_compra, comprado
+    return valor_compra, comprado, cotacao_outro_par
 
 
 
-
-
-
-def trade_sol(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma14ETH, arr_ma36ETH):
+def trade_sol(valor_compra, valor_atual):
 
     from escrever_relatorio import relatorio_trade
-    from variaveis import lucro, lucro_porcentagem, pares_sol
-    from main import ultima_moeda
+    from main import ultima_moeda, valor_atual_adaBNB, valor_atual_adaETH, cotacao_outro_par
     import trade
 
 
     if ultima_moeda == 'ETH':
-
+        
         if valor_atual > valor_compra * 1.0025:
 
-            order = trade.vender('SOLETH', saldo)
+            order = trade.vender('SOLETH')
             print(order)
-            relatorio_trade()
+            relatorio_trade(order)
 
-            lucro = valor_atual - valor_compra
-            lucro_porcentagem = lucro / valor_compra * 100
-
-        if arr_ma14BNB[-2] < arr_ma36BNB[-2] and arr_ma14BNB[-1] > arr_ma36BNB[-1]:
+        if valor_atual_adaBNB > cotacao_outro_par * 1.0025:
             
             order = trade.vender('SOLBNB')
-            valor_compra = valor_atual
             
             print(order)
             relatorio_trade(order)
@@ -57,71 +60,53 @@ def trade_sol(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma
 
         if valor_atual > valor_compra * 1.0025:
 
-            order = trade.vender('SOLBNB', saldo)
+            order = trade.vender('SOLBNB')
             print(order)
-            relatorio_trade()
+            relatorio_trade(order)
 
-            lucro = valor_atual - valor_compra
-            lucro_porcentagem = lucro / valor_compra * 100
-
-        if arr_ma14ETH[-2] < arr_ma36ETH[-2] and arr_ma14ETH[-1] > arr_ma36ETH[-1]:
+        if valor_atual_adaETH > cotacao_outro_par * 1.0025:
             
             order = trade.vender('SOLETH')
-            valor_compra = valor_atual
-            
-            print(order)
-            relatorio_trade(order)
-
-    return lucro, lucro_porcentagem
-
-
-
-
-
-def trade_ada(saldo, valor_compra, valor_atual, arr_ma14BNB, arr_ma36BNB, arr_ma14ETH, arr_ma36ETH):
-
-    from escrever_relatorio import relatorio_trade
-    from variaveis import lucro, lucro_porcentagem, pares_sol
-    from main import ultima_moeda
-    import trade
-
-
-    if ultima_moeda == 'ETH':
-
-        if valor_atual > valor_compra * 1.0025:
-
-            order = trade.vender('ADAETH', saldo)
-            print(order)
-            relatorio_trade(order)
-
-            lucro = valor_atual - valor_compra
-            lucro_porcentagem = lucro / valor_compra * 100
-
-        if arr_ma14BNB[-2] < arr_ma36BNB[-2] and arr_ma14BNB[-1] > arr_ma36BNB[-1]:
-            
-            order = trade.vender('ADABNB')
-            valor_compra = valor_atual
-            
-            print(order)
-            relatorio_trade(order)
-
-    if ultima_moeda == 'BNB':
-
-        if valor_atual > valor_compra * 1.0025:
-
-            order = trade.vender('ADABNB', saldo)
-            print(order)
-            relatorio_trade()
-
-            lucro = valor_atual - valor_compra
-            lucro_porcentagem = lucro / valor_compra * 100
-
-        if arr_ma14ETH[-2] < arr_ma36ETH[-2] and arr_ma14ETH[-1] > arr_ma36ETH[-1]:
-            
-            order = trade.vender('ADAETH')
-            valor_compra = valor_atual
             
             print(order)
             relatorio_trade(order)
     
-    return lucro, lucro_porcentagem
+
+
+def trade_ada(valor_compra, valor_atual):
+
+    from escrever_relatorio import relatorio_trade
+    from main import ultima_moeda, valor_atual_adaBNB, valor_atual_adaETH, cotacao_outro_par
+    import trade
+
+
+    if ultima_moeda == 'ETH':
+        
+        if valor_atual > valor_compra * 1.0025:
+
+            order = trade.vender('ADAETH')
+            print(order)
+            relatorio_trade(order)
+
+        if valor_atual_adaBNB > cotacao_outro_par * 1.0025:
+            
+            order = trade.vender('ADABNB')
+            
+            print(order)
+            relatorio_trade(order)
+
+    if ultima_moeda == 'BNB':
+
+        if valor_atual > valor_compra * 1.0025:
+
+            order = trade.vender('ADABNB')
+            print(order)
+            relatorio_trade(order)
+
+        if valor_atual_adaETH > cotacao_outro_par * 1.0025:
+            
+            order = trade.vender('ADAETH')
+            
+            print(order)
+            relatorio_trade(order)
+    

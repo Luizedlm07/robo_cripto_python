@@ -1,11 +1,13 @@
-import csv
+def dados_relatorio():
 
-with open('relatorio_trade.txt', 'r') as dados:
-    dado = csv.reader(dados, delimiter = ",")
+    import csv
 
-    for linha in dado:
-        ultimo_trade_moeda = linha[0][12:18]
-        ultimo_trade = linha[12][9:15]
+    with open('relatorio_trade.txt', 'r') as dados:
+        dado = csv.reader(dados, delimiter = ",")
 
+        for linha in dado:
+            ultimo_trade_moeda = linha[0][12:18]
+            ultimo_trade = linha[12][9:15]
+            ultimo_preco = linha[14][22:32]
 
-# dado.close()
+    return ultimo_trade_moeda, ultimo_trade, ultimo_preco

@@ -6,7 +6,7 @@ from cotacao import cotacao
 from escrever_relatorio import relatorio
 from meu_saldo import saldo
 from variaveis import *
-from dados_relatorio import ultimo_trade_moeda
+
 
 client = Client(api_key, api_secret)
 
@@ -31,7 +31,7 @@ while True:
     ma14_adaETH, ma36_adaETH, valor_atual_adaETH = cotacao(adaETH)
 
 
-    saldoBNB, saldoETH, saldoADA, saldoSOL, moeda_atual = saldo()
+    saldoBNB, saldoETH, saldoADA, saldoSOL, moeda_atual, ultimo_trade_moeda, ultimo_preco = saldo()
 
     print("Meus ativos: " )
     print("Meu saldo BNB = ", saldoBNB)
@@ -50,16 +50,10 @@ while True:
     arr_ma14_adaETH.append(ma14_adaETH)
     arr_ma36_adaETH.append(ma36_adaETH)
 
-    if cont < 1:
-        ultima_moeda = 'BNB' if 'BNB' in ultimo_trade_moeda else 'ETH'
-        
-        print("Ultima moeda: ", ultima_moeda)
-        # if moeda_atual == 'ETH':
-        #     valor_compra = valor_atual_bnbETH
-        # if moeda_atual == 'SOL':
-        #     valor_compra = valor_atual_solBNB
-        # if moeda_atual == 'ADA':
-        #     valor_compra = valor_atual_adaBNB
+    valor_compra = float(ultimo_preco)
+    ultima_moeda = 'BNB' if 'BNB' in ultimo_trade_moeda else 'ETH'
+
+    print("Ultima moeda: ", ultima_moeda)
 
     if cont > 1:
 
@@ -69,7 +63,7 @@ while True:
 
                 if comprado == 0 and moeda == 'SOLBNB':
 
-                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
                     moeda,
                     moeda_atual,
                     arr_ma14_solBNB,
@@ -79,7 +73,7 @@ while True:
 
                 if comprado == 0 and moeda == 'ADABNB':
 
-                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
                     moeda,
                     moeda_atual,
                     arr_ma14_adaBNB,
@@ -128,7 +122,6 @@ while True:
         if moeda_atual == 'SOL':
 
             lucro, lucro_porcentagem = condicao_trade.trade_sol(
-            saldoSOL,
             valor_compra,
             valor_atual_solBNB,
             arr_ma14_solBNB,
@@ -140,7 +133,6 @@ while True:
         if moeda_atual == 'ADA':
 
             lucro, lucro_porcentagem = condicao_trade.trade_ada(
-            saldoADA,
             valor_compra,
             valor_atual_adaBNB,
             arr_ma14_adaBNB,
@@ -158,10 +150,7 @@ while True:
     cotacao=valor_atual_bnbETH, 
     cotacao2=valor_atual_solBNB,
     cotacao3=valor_atual_adaBNB,
-    posicionado=moeda_atual,
-    lucro=lucro,
-    lucro_porcentagem=lucro_porcentagem,
-    lucro_total=lucro_total
+    posicionado=moeda_atual
     )
 
     print("O código rodou:", cont, "vez(es).")
