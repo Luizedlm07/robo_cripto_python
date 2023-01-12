@@ -20,6 +20,7 @@ print("Robô iniciado.\n")
 while True:
     import condicao_trade
 
+
     hora_atual = datetime.datetime.now()
     hora_atual = (f"{hora_atual.hour}:{hora_atual.minute}:{hora_atual.second}")
 
@@ -89,7 +90,7 @@ while True:
 
                 if comprado == 0 and moeda == 'BNBETH':
 
-                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
                     moeda,
                     moeda_atual,
                     arr_ma14_bnbETH,
@@ -99,7 +100,7 @@ while True:
 
                 if comprado == 0 and moeda == 'SOLETH':
 
-                    valor_compra, comprado = condicao_trade.bnb_eth_compram(
+                    valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
                     moeda,
                     moeda_atual,
                     arr_ma14_solETH,
@@ -121,24 +122,16 @@ while True:
 
         if moeda_atual == 'SOL':
 
-            lucro, lucro_porcentagem = condicao_trade.trade_sol(
+            condicao_trade.trade_sol(
             valor_compra,
-            valor_atual_solBNB,
-            arr_ma14_solBNB,
-            arr_ma36_solBNB,
-            arr_ma14_solETH,
-            arr_ma36_solETH
+            valor_atual_solBNB
             )
 
         if moeda_atual == 'ADA':
 
-            lucro, lucro_porcentagem = condicao_trade.trade_ada(
+            condicao_trade.trade_ada(
             valor_compra,
-            valor_atual_adaBNB,
-            arr_ma14_adaBNB,
-            arr_ma36_adaBNB,
-            arr_ma14_adaETH,
-            arr_ma36_adaETH
+            valor_atual_adaBNB
             )     
 
     lucro_total += lucro

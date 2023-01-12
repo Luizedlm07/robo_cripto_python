@@ -14,3 +14,16 @@ def relatorio_trade(order):
     relatorio_order = open('relatorio_trade.txt', "a+")
     relatorio_order.write(f"\n{order}")
     relatorio_order.close()
+
+def guardar_cotacao(cotacao_outro_par):
+
+    relatorio_cotacao = open('relatorio_cotacao.txt', 'a+')
+    relatorio_cotacao.write(f"\n{cotacao_outro_par}")
+    relatorio_cotacao.close()
+
+def acessar_cotacao():
+    relatorio_cotacao = open('relatorio_cotacao.txt', 'r')
+    for cotacao in relatorio_cotacao:
+        ultima_cotacao = cotacao
+
+    return ultima_cotacao

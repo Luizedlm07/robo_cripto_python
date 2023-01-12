@@ -15,13 +15,13 @@ def cotacao(moeda):
         ma14 += float(kline[4])
     ma14 /= 14
 
-    print(f"Moving Average(14): {ma14}")
+    print(f"Moving Average(14): {ma14:.8f}")
 
     for i, kline in enumerate(client.get_historical_klines_generator(moeda, Client.KLINE_INTERVAL_1MINUTE, limit=36)):
         ma36 += float(kline[4])
     ma36 /= 36
 
-    print(f"Moving Average(36): {ma36}\n")
+    print(f"Moving Average(36): {ma36:.8f}\n")
 
     return ma14, ma36, valor_atual
      
