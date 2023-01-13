@@ -45,70 +45,79 @@ def trade_sol(valor_compra, valor_atual):
 
     if ultima_moeda == 'ETH':
         
-        if valor_atual > valor_compra * 1.0025:
+        if valor_atual > valor_compra * 1.0035:
 
             order = trade.vender('SOLETH')
             print(order)
             relatorio_trade(order)
 
-        # if valor_atual_solBNB > cotacao_outro_par * 1.0025:
+    if cotacao_outro_par != 0.0:
+
+        if valor_atual_solBNB > cotacao_outro_par * 1.0035:
             
-        #     order = trade.vender('SOLBNB')
+            order = trade.vender('SOLBNB')
             
-        #     print(order)
-        #     relatorio_trade(order)
+            print(order)
+            relatorio_trade(order)
 
     if ultima_moeda == 'BNB':
 
-        if valor_atual > valor_compra * 1.0025:
+        if valor_atual > valor_compra * 1.0035:
 
             order = trade.vender('SOLBNB')
             print(order)
             relatorio_trade(order)
 
-        # if valor_atual_solETH > cotacao_outro_par * 1.0025:
+    if cotacao_outro_par != 0.0:
+
+        if valor_atual_solETH > cotacao_outro_par * 1.0035:
             
-        #     order = trade.vender('SOLETH')
+            order = trade.vender('SOLETH')
             
-        #     print(order)
-        #     relatorio_trade(order)
+            print(order)
+            relatorio_trade(order)
     
 
 
 def trade_ada(valor_compra, valor_atual):
 
-    from escrever_relatorio import relatorio_trade
+    from escrever_relatorio import relatorio_trade, acessar_cotacao
     from main import ultima_moeda, valor_atual_adaBNB, valor_atual_adaETH, cotacao_outro_par
     import trade
 
+    cotacao_outro_par = acessar_cotacao()
 
     if ultima_moeda == 'ETH':
         
-        if valor_atual > valor_compra * 1.0025:
+        if valor_atual > valor_compra * 1.0035:
 
             order = trade.vender('ADAETH')
             print(order)
             relatorio_trade(order)
 
-        # if valor_atual_adaBNB > cotacao_outro_par * 1.0025:
+    if cotacao_outro_par != 0.0:
+
+        if valor_atual_adaBNB > cotacao_outro_par * 1.0035:
             
-        #     order = trade.vender('ADABNB')
+            order = trade.vender('ADABNB')
             
-        #     print(order)
-        #     relatorio_trade(order)
+            print(order)
+            relatorio_trade(order)
 
     if ultima_moeda == 'BNB':
 
-        if valor_atual > valor_compra * 1.0025:
+        if valor_atual > valor_compra * 1.0035:
 
             order = trade.vender('ADABNB')
             print(order)
             relatorio_trade(order)
 
-        # if valor_atual_adaETH > cotacao_outro_par * 1.0025:
+    if cotacao_outro_par != 0.0:
+
+        if valor_atual_adaETH > cotacao_outro_par * 1.0035:
             
-        #     order = trade.vender('ADAETH')
+            order = trade.vender('ADAETH')
             
-        #     print(order)
-        #     relatorio_trade(order)
+            print(order)
+            relatorio_trade(order)
     
