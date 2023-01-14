@@ -1,11 +1,12 @@
 import datetime
 import time
-
+from binance.client import Client
 from secrets_1 import api_key, api_secret
 from cotacao import cotacao
 from escrever_relatorio import relatorio
-
 from variaveis import *
+
+client = Client(api_key, api_secret)
 
 
 relatorio_1 = open('relatorio.txt', 'w')
@@ -17,12 +18,8 @@ print("Robô iniciado.\n")
 
 while True:
     
-    from binance.client import Client
-    client = Client(api_key, api_secret)
     from meu_saldo import saldo
     import condicao_trade
-
-    
 
     hora_atual = datetime.datetime.now()
     hora_atual = (f"{hora_atual.hour}:{hora_atual.minute}:{hora_atual.second}")
@@ -126,15 +123,15 @@ while True:
         if moeda_atual == 'SOL':
 
             condicao_trade.trade_sol(
-            valor_compra,
-            valor_atual_solBNB
+            valor_atual_solBNB,
+            saldoSOL
             )
 
         if moeda_atual == 'ADA':
 
             condicao_trade.trade_ada(
-            valor_compra,
-            valor_atual_adaBNB
+            valor_atual_adaBNB,
+            saldoADA
             )     
 
     lucro_total += lucro

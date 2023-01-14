@@ -18,12 +18,14 @@ def relatorio_trade(order):
 def guardar_cotacao(cotacao_outro_par):
 
     relatorio_cotacao = open('relatorio_cotacao.txt', 'a+')
-    relatorio_cotacao.write(cotacao_outro_par, "\n")
+    relatorio_cotacao.write(f"{cotacao_outro_par}\n")
     relatorio_cotacao.close()
 
 def acessar_cotacao():
     relatorio_cotacao = open('relatorio_cotacao.txt', 'r')
     for cotacao in relatorio_cotacao:
         ultima_cotacao = float(cotacao)
-
+    relatorio_cotacao.close()
     return ultima_cotacao
+
+    
