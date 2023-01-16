@@ -22,7 +22,7 @@ def saldo():
     meu_saldoADA = float(minhas_moedas[3]['free'])
     meu_saldoSOL = float(minhas_moedas[5]['free'])
 
-    ultimo_trade_moeda, ultimo_trade, ultimo_preco, ultima_qty_par_1, ultima_qty_par_2 = dados_relatorio()
+    ultimo_trade_moeda, ultimo_trade, ultimo_preco= dados_relatorio()
 
     moeda_atual = ultimo_trade_moeda[:3] if 'BUY' in ultimo_trade else ultimo_trade_moeda[3:]
 

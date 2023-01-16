@@ -60,21 +60,28 @@ def comprar(moeda, moeda_atual):
 
 
 def vender(moeda, saldo, valor_atual):
-
+    
+    from decimal import Decimal as D, ROUND_DOWN, ROUND_UP
     import time
-    # diminuir_valor = 0.999
-    # cont = 0
-    # _ = 0
-    # while _ == 0:
-    # diminuir_valor -= 0.003
-        # try:
+
+    info = client.get_symbol_info(moeda)
+
+    price_filter = float(info['filters'][0]['tickSize'])
+    price = valor_atual * 1.005
+    price = D.from_float(price).quantize(D(str(price_filter)))
+    minimum = float(info['filters'][1]['minQty'])
+    quant = D.from_float(saldo).quantize(D(str(minimum)))
+
+    print("Preço e quantidade: ", price, quant)
+    print(f"{price * D('1.005')}")
+
     order = client.create_order(
     symbol=moeda,
     side=SIDE_SELL,
     type=ORDER_TYPE_LIMIT,
     timeInForce=TIME_IN_FORCE_GTC,
-    price=f"{valor_atual * 1.0050:.6f}",
-    quantity=saldo
+    price=f"{price}",
+    quantity=f"{quant}"
     )
     _ = True
     while _:
@@ -83,8 +90,8 @@ def vender(moeda, saldo, valor_atual):
         ordem = client.get_all_orders(symbol=moeda, limit=1)
         print("Ordem: \n", ordem)
 
-        if 'FILLED' in ordem["status"]:
-            print("Trade concluído! Ordens canceladas. \n")
+        if 'FILLED' in ordem[0]["status"]:
+            print("Trade concluído!\n")
             _ = False
         else:
             time.sleep(10)

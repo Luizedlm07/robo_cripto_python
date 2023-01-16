@@ -62,6 +62,16 @@ while True:
 
             for moeda in pares_bnb:
 
+                if comprado == 0 and moeda == 'BNBETH':
+
+                    valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
+                    moeda,
+                    moeda_atual,
+                    arr_ma14_bnbETH,
+                    arr_ma36_bnbETH,
+                    valor_atual_bnbETH
+                    )
+
                 if comprado == 0 and moeda == 'SOLBNB':
 
                     valor_compra, comprado, cotacao_outro_par = condicao_trade.bnb_eth_compram(
