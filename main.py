@@ -3,7 +3,7 @@ import time
 from binance.client import Client
 from secrets_1 import api_key, api_secret
 from cotacao import cotacao
-from escrever_relatorio import relatorio
+from escrever_relatorio import relatorio, relatorio_trade
 from variaveis import *
 
 client = Client(api_key, api_secret)
@@ -14,6 +14,7 @@ relatorio_1.write("Hora atual, Cotação BNB, Cotação SOL, Cotação ADA, Posi
 relatorio_1.close()
 
 print("Robô iniciado.\n")
+
 
 
 while True:
@@ -39,6 +40,21 @@ while True:
     print("Meu saldo ETH = ", saldoETH)
     print("Meu saldo ADA = ", saldoADA)
     print("Meu saldo SOL = ", saldoSOL, "\n")
+
+    for moeda in lista_moedas:
+
+        orders = client.get_all_orders(symbol=moeda, limit=1)
+    
+        while 'NEW' in orders[0]["status"]:
+
+            print("Ordem ativa... \n", orders)
+            time.sleep(10)
+
+    if 'FILLED' in orders[0]["status"]:       
+
+        print("Trade concluído!\n")
+        relatorio_trade(orders)
+
 
     arr_ma14_bnbETH.append(ma14_bnbETH)
     arr_ma36_bnbETH.append(ma36_bnbETH)
@@ -69,7 +85,8 @@ while True:
                     moeda_atual,
                     arr_ma14_bnbETH,
                     arr_ma36_bnbETH,
-                    valor_atual_bnbETH
+                    valor_atual_bnbETH,
+                    saldoBNB
                     )
 
                 if comprado == 0 and moeda == 'SOLBNB':
@@ -79,7 +96,8 @@ while True:
                     moeda_atual,
                     arr_ma14_solBNB,
                     arr_ma36_solBNB,
-                    valor_atual_solBNB
+                    valor_atual_solBNB,
+                    saldoBNB
                     )
 
                 if comprado == 0 and moeda == 'ADABNB':
@@ -89,7 +107,8 @@ while True:
                     moeda_atual,
                     arr_ma14_adaBNB,
                     arr_ma36_adaBNB,
-                    valor_atual_adaBNB
+                    valor_atual_adaBNB,
+                    saldoBNB
                     )
 
             comprado = 0
@@ -105,7 +124,8 @@ while True:
                     moeda_atual,
                     arr_ma14_bnbETH,
                     arr_ma36_bnbETH,
-                    valor_atual_bnbETH
+                    valor_atual_bnbETH,
+                    saldoETH
                     )
 
                 if comprado == 0 and moeda == 'SOLETH':
@@ -115,7 +135,8 @@ while True:
                     moeda_atual,
                     arr_ma14_solETH,
                     arr_ma36_solETH,
-                    valor_atual_solETH
+                    valor_atual_solETH,
+                    saldoETH
                     )
 
                 if comprado == 0 and moeda == 'ADAETH':
@@ -125,7 +146,8 @@ while True:
                     moeda_atual,
                     arr_ma14_adaETH,
                     arr_ma36_adaETH,
-                    valor_atual_adaETH
+                    valor_atual_adaETH,
+                    saldoETH
                     )
 
             comprado = 0

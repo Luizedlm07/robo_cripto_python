@@ -1,4 +1,4 @@
-def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
+def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual, saldo):
 
     import trade
     from escrever_relatorio import relatorio_trade, guardar_cotacao
@@ -17,7 +17,7 @@ def bnb_eth_compram(moeda, moeda_atual, arr_ma14, arr_ma36, valor_atual):
 
     elif arr_ma14[-2] < arr_ma36[-2] and arr_ma14[-1] > arr_ma36[-1]:
         
-        order = trade.comprar(moeda, moeda_atual)
+        order = trade.comprar(moeda, moeda_atual, saldo)
         valor_compra = valor_atual
         if 'BNB' in moeda:
             if 'ADA' in moeda:

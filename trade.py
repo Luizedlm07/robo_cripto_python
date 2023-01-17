@@ -1,59 +1,73 @@
 from main import saldoETH, saldoBNB, client
 from binance.enums import *
-from binance.client import Client
 from binance import exceptions
 
-def comprar(moeda, moeda_atual):
+def comprar(moeda, moeda_atual, saldo):
+    
     diminuir_valor = 0.990
     _ = 0
+
     if moeda_atual == 'BNB':
+
         cont = 0
         while _ == 0:
+            
             diminuir_valor -= 0.003
+
             try: 
                 order = client.create_order(
                 symbol=moeda,
                 side=SIDE_BUY,
                 type=ORDER_TYPE_MARKET,
-                quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
+                quoteOrderQty=f'{saldo * diminuir_valor:.4f}'
                 )
                 _ = 1
+
             except exceptions.BinanceAPIException:
                 print("Tentando comprar...")
                 cont += 1
-                if cont <= 300:
+
+                if cont <= 30:
                     continue
+
                 else: 
                     order = client.create_order(
                     symbol=moeda,
                     side=SIDE_BUY,
                     type=ORDER_TYPE_MARKET,
-                    quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.8f}'
+                    quoteOrderQty=f'{float(saldoBNB * diminuir_valor):.4f}'
                     )
 
     if moeda_atual == 'ETH':
+
         cont = 0
+
         while _ == 0:
+
             diminuir_valor -= 0.003
+
             try: 
                 order = client.create_order(
                 symbol=moeda,
                 side=SIDE_BUY,
                 type=ORDER_TYPE_MARKET,
-                quoteOrderQty=f'{float(saldoETH * diminuir_valor):.8f}'
+                quoteOrderQty=f'{float(saldoETH * diminuir_valor):.5f}'
                 )
                 _ = 1
+
             except exceptions.BinanceAPIException:
                 print("Tentando comprar...")
                 cont += 1
-                if cont <= 300:
+
+                if cont <= 30:
                     continue
+
                 else:
                     order = client.create_order(
                     symbol=moeda,
                     side=SIDE_BUY,
                     type=ORDER_TYPE_MARKET,
-                    quoteOrderQty=f'{float(saldoETH * diminuir_valor):.8f}'
+                    quoteOrderQty=f'{float(saldoETH * diminuir_valor):.5f}'
                     )
 
     return order
@@ -61,7 +75,7 @@ def comprar(moeda, moeda_atual):
 
 def vender(moeda, saldo, valor_atual):
     
-    from decimal import Decimal as D, ROUND_DOWN, ROUND_UP
+    from decimal import Decimal as D
     import time
 
     info = client.get_symbol_info(moeda)
