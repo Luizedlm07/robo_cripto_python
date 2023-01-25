@@ -12,7 +12,7 @@ def relatorio(hora_atual, cotacao, cotacao2, cotacao3, posicionado):
 def relatorio_trade(order):
 
     relatorio_order = open('relatorio_trade.txt', "a+")
-    relatorio_order.write(f"\n{order}")
+    relatorio_order.write(f"{order}\n")
     relatorio_order.close()
 
 def guardar_cotacao(cotacao_outro_par):

@@ -89,7 +89,7 @@ def vender(moeda, saldo, valor_atual):
     print("Preço e quantidade: ", price, quant)
     print(f"{price * D('1.005')}")
 
-    order = client.create_order(
+    client.create_order(
     symbol=moeda,
     side=SIDE_SELL,
     type=ORDER_TYPE_LIMIT,
@@ -110,21 +110,7 @@ def vender(moeda, saldo, valor_atual):
         else:
             time.sleep(10)
 
-        # _ = 1
-        # except exceptions.BinanceAPIException:
-        #     print("Tentando vender...")
-        #     cont += 1
-        #     if cont <= 3000:
-        #         continue
-        #     else: 
-        #         order = client.create_order(
-        #         symbol=moeda,
-        #         side=SIDE_SELL,
-        #         type=ORDER_TYPE_MARKET,
-        #         quoteOrderQty=f'{float(0.1 * diminuir_valor):.8f}'
-        #         )
-
-    return order
+    return ordem
 
 def vender_bnbETH():
     diminuir_valor = 0.990
