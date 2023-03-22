@@ -1,13 +1,14 @@
 from class_usuario import Usuario
-from par_moeda import Par_moeda
+
 
 class Trade():
 
     def __init__(self):
         pass
     
+    @classmethod
     def comprar(self, moeda, saldo):
-        
+        from class_usuario import client
         from binance import exceptions
         from binance.enums import (
                 ORDER_TYPE_LIMIT,
@@ -28,7 +29,7 @@ class Trade():
             diminuir_valor -= 0.003
 
             try: 
-                order = Usuario.client.create_order(
+                order = client.create_order(
                 symbol=moeda,
                 side=SIDE_BUY,
                 type=ORDER_TYPE_MARKET,
@@ -44,7 +45,7 @@ class Trade():
                     continue
 
                 else: 
-                    order = Usuario.client.create_order(
+                    order = client.create_order(
                     symbol=moeda,
                     side=SIDE_BUY,
                     type=ORDER_TYPE_MARKET,
@@ -53,9 +54,10 @@ class Trade():
 
         return order
     
-    def vender(self, moeda, saldo, cotacao):
+    @classmethod
+    def vender(self, moeda, saldo, objeto_moeda):
 
-        
+        from class_usuario import client
         from decimal import Decimal as D
         import time
         from binance.enums import (
@@ -76,9 +78,8 @@ class Trade():
         quant = D.from_float(saldo).quantize(D(str(minimum)))
 
         print("Preço e quantidade: ", price, quant)
-        print(f"{price * D('0.995')}")
 
-        Usuario.client.create_order(
+        client.create_order(
         symbol=moeda,
         side=SIDE_SELL,
         type=ORDER_TYPE_LIMIT,
@@ -90,13 +91,14 @@ class Trade():
         while _:
 
             print('Ordem aberta...')
-            print(Par_moeda.cotar(moeda))
+            cotacao = objeto_moeda.cotar(moeda)
+            print()
 
             ordem = Usuario.client.get_all_orders(symbol=moeda, limit=1)
             print("Ordem: \n", ordem)
 
-            if Par_moeda.cotar(moeda) > cotacao:
-                self.cancel_order()
+            if cotacao > price:
+                self.cancel_order(moeda, ordem[0]["orderId"])
             if 'FILLED' in ordem[0]["status"]:
                 print("Trade concluído!\n")
                 _ = False

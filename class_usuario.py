@@ -6,13 +6,14 @@ client = Client(api_key, api_secret)
 class Usuario():                ## Classe que armazena dados referentes ao usuário
 
     def __init__(self):
-        self.moeda, self.saldo = self.verificar_moeda_atual()
-        self.trades = self.consultar_trade()
-        self.orders = self.consultar_order()
+        self.moeda, self.saldo_convertido, self.saldo = self.verificar_moeda_atual()
+        self.trades = None
+        self.orders = None
         self.client = client
+        self.pares = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
+
 
     def verificar_moeda_atual(self):
-
 
         def converter(moeda):
 
@@ -23,35 +24,54 @@ class Usuario():                ## Classe que armazena dados referentes ao usuá
             if response.status_code == 200:
                 price = response.json()['price']
                 saldo_convertido = float(ativo["free"]) * float(price)
-                print(f'O preço atual de {symbol} é de {float(price):.2f} dólares.')
-                print(f'A conversão do seu saldo de {symbol} em dólares é {saldo_convertido:.2f}')
                 return saldo_convertido
 
-            else:
-                print(f'Erro ao obter o preço de {symbol}')
-
-
         info = client.get_account()
-
         lista_ativo = info["balances"]
         moeda = []
+        saldo_convertido = []
         saldo = []
 
         for ativo in lista_ativo:
             if float(ativo["free"]) > 0:
                 moeda.append(ativo["asset"])
-                saldo.append(converter(ativo["asset"]))
-            if saldo[-1] is None:
-                del saldo[-1]
-        maior_valor = max(saldo)
-        indice_maior_valor = saldo.index(maior_valor)
+                saldo_convertido.append(converter(ativo["asset"]))
+                saldo.append(float(ativo["free"]))
 
-        return moeda[indice_maior_valor], saldo[indice_maior_valor]
+            if saldo_convertido[-1] is None:
+                del saldo_convertido[-1], moeda[-1], saldo[-1]
+
+        maior_valor = max(saldo_convertido)
+        indice_maior_valor = saldo_convertido.index(maior_valor)
+
+        return moeda[indice_maior_valor], saldo_convertido[indice_maior_valor], saldo[indice_maior_valor]
     
-
-
     def consultar_trade(self):
-        pass
+        lista_moedas = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
+        for moeda in lista_moedas:
+            self.trades = self.client.get_my_trades(symbol=moeda, limit=1)
+
 
     def consultar_order(self):
-        pass
+        from time import sleep
+        lista_moedas = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
+
+        for moeda in lista_moedas:
+            self.order = self.client.get_all_orders(symbol=moeda, limit=1)
+
+            if 'LIMIT' in self.order[0]["type"]:
+                while 'NEW' in self.order[0]["status"]:
+                    print("Ordem ativa... \n", self.order)
+                    sleep(60)
+
+    def verificar_negociaveis(self, moeda):
+
+        array_negociaveis = []
+        for par in self.pares:
+
+            if moeda in par:
+                array_negociaveis.append(par)
+        return array_negociaveis
+                    
+
+

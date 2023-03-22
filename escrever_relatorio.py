@@ -1,12 +1,12 @@
 
 
-def relatorio(hora_atual, cotacao, cotacao2, cotacao3, posicionado):
+def relatorio(hora_atual, cotacao, cotacao2, cotacao3, cotacao4, cotacao5, posicionado):
 
     relatorio = open("relatorio.txt", "a+")
     relatorio.write(f"{hora_atual}, {cotacao}, {cotacao2}, {cotacao3}, {posicionado}\n")
-
-    print("\nHora atual, Cotação BNB, Cotação SOL, Cotação ADA, Posição")
-    print(f"{hora_atual}, {cotacao}, {cotacao2}, {cotacao3}, {posicionado}\n")
+    print("\nCotações:")
+    print("\nHora atual, BNBETH, SOLBNB, ADABNB, SOLETH, ADAETH,  Posição")
+    print(f"{hora_atual}, {cotacao}, {cotacao2}, {cotacao3}, {cotacao4}, {cotacao5}, {posicionado}\n")
     relatorio.close()
 
 def relatorio_trade(order):
