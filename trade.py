@@ -69,7 +69,7 @@ class Trade():
             TIME_IN_FORCE_IOC
         )
 
-        info = Usuario.client.get_symbol_info(moeda)
+        info = client.get_symbol_info(moeda)
 
         price_filter = float(info['filters'][0]['tickSize'])
         price = cotacao * 0.995
@@ -94,18 +94,18 @@ class Trade():
             cotacao = objeto_moeda.cotar(moeda)
             print()
 
-            ordem = Usuario.client.get_all_orders(symbol=moeda, limit=1)
-            print("Ordem: \n", ordem)
+            order = Usuario.client.get_all_orders(symbol=moeda, limit=1)
+            print("Ordem: \n", order)
 
             if cotacao > price:
-                self.cancel_order(moeda, ordem[0]["orderId"])
-            if 'FILLED' in ordem[0]["status"]:
+                order = self.cancel_order(moeda, order[0]["orderId"])
+            if 'FILLED' in order[0]["status"]:
                 print("Trade concluído!\n")
                 _ = False
             else:
                 time.sleep(10)
 
-        return ordem
+        return order
 
     def cancel_order(self, symbol, order_id):
 

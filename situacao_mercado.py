@@ -1,28 +1,28 @@
-from trade import Trade
-
 class Situacao_Mercado():
 
-    def __init__(self, objeto_moeda, objeto_usuario):
-        self.negociaveis = self.verificar_negociaveis(objeto_usuario.moeda)
-        self.gatilho = self.gatilho_trade(objeto_moeda)
-        
+    def __init__(self, objeto_moeda):
+      self.gatilho_trade(objeto_moeda)
 
-    def verificar_negociaveis(self, moeda):
+    def gatilho_trade(self, objeto_moeda):
+      from main import usuario
+      from escrever_relatorio import Relatorio
 
-        array_negociaveis = []
-        for par in self.pares:
-
-            if moeda in par:
-                array_negociaveis.append(par)
-        return array_negociaveis
-
-    def gatilho_trade(self, objeto_moeda):        ## Se a minha moeda atual for igual a primeira moeda do par, ela pode vender. Se for igual a segunda moeda, pode comprar
-          
       if objeto_moeda.lista_mm_menor[-1] < objeto_moeda.lista_mm_maior[-1] and objeto_moeda.lista_mm_menor[-2] > objeto_moeda.lista_mm_maior[-2]:
-        return 'BUY'
+        print(f'Gatilho de compra para {objeto_moeda.symbol}')
+        order = usuario.verificar_gatilhos(objeto_moeda.symbol, 'BUY', objeto_moeda)
+        if order is not None:
+          Relatorio.relatorio_trade(order)
       
 
       if objeto_moeda.lista_mm_menor[-1] > objeto_moeda.lista_mm_maior[-1] and objeto_moeda.lista_mm_menor[-2] < objeto_moeda.lista_mm_maior[-2]:
-        return 'SELL'
+        print(f'Gatilho de venda para {objeto_moeda.symbol}')
+        usuario.verificar_gatilhos(objeto_moeda.symbol, 'SELL', objeto_moeda)
+        
 
+      
+
+## Verificar negociáveis foi removido da classe 'Situação Mercado'
+## A clase 'Situação Mercado não faz mais a chamada das funções de compra e venda
+## Agora ela chama uma função da classe usuário, passando gatilhos de compra e venda
+## Então, a classe Usuario é que faz a chamada das funções de compra e venda
 

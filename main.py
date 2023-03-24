@@ -1,12 +1,11 @@
 import datetime
 import time
-from escrever_relatorio import relatorio
+from escrever_relatorio import Relatorio
 from binance import exceptions
 from class_usuario import Usuario
 usuario = Usuario()
 from par_moeda import Par_moeda
 from situacao_mercado import Situacao_Mercado
-from trade import Trade
 
 
 relatorio_1 = open('relatorio.txt', 'w')
@@ -49,18 +48,17 @@ while True:
         print(f"Média Móvel {solETH.symbol} | Menor = {solETH.mm_menor:.8f} | Maior = {solETH.mm_maior:.8f}")
         print(f"Média Móvel {adaETH.symbol} | Menor = {adaETH.mm_menor:.8f} | Maior = {adaETH.mm_maior:.8f}")
 
+        mercado_solbnb = Situacao_Mercado(solBNB)
+        mercado_bnbeth = Situacao_Mercado(bnbETH)
+        mercado_adabnb = Situacao_Mercado(adaBNB)
+        mercado_soleth = Situacao_Mercado(solETH)
+        mercado_adaeth = Situacao_Mercado(adaETH)
 
-
-        mercado_bnbeth = Situacao_Mercado(bnbETH, usuario)
-        mercado_solbnb = Situacao_Mercado(solBNB, usuario)
-        mercado_adabnb = Situacao_Mercado(adaBNB, usuario)
-        mercado_soleth = Situacao_Mercado(solETH, usuario)
-        mercado_adaeth = Situacao_Mercado(adaETH, usuario)
-
+        usuario.atualizar_valores()
         usuario.consultar_order()
         usuario.consultar_trade()
         
-        relatorio(
+        Relatorio.relatorio_constante(
         hora_atual=hora_atual, 
         cotacao=bnbETH.cotacao, 
         cotacao2=solBNB.cotacao,

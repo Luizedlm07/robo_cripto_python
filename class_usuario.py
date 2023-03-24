@@ -1,6 +1,7 @@
 from binance.client import Client
 from secrets_1 import api_key, api_secret
 import requests
+
 client = Client(api_key, api_secret)
 
 class Usuario():                ## Classe que armazena dados referentes ao usuário
@@ -11,6 +12,7 @@ class Usuario():                ## Classe que armazena dados referentes ao usuá
         self.orders = None
         self.client = client
         self.pares = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
+        self.negociaveis = self.verificar_negociaveis(self.moeda)
 
 
     def verificar_moeda_atual(self):
@@ -47,16 +49,15 @@ class Usuario():                ## Classe que armazena dados referentes ao usuá
         return moeda[indice_maior_valor], saldo_convertido[indice_maior_valor], saldo[indice_maior_valor]
     
     def consultar_trade(self):
-        lista_moedas = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
-        for moeda in lista_moedas:
+        
+        for moeda in self.pares:
             self.trades = self.client.get_my_trades(symbol=moeda, limit=1)
 
 
     def consultar_order(self):
         from time import sleep
-        lista_moedas = ['BNBETH','SOLBNB','ADABNB','ADAETH','SOLETH']
-
-        for moeda in lista_moedas:
+       
+        for moeda in self.pares:
             self.order = self.client.get_all_orders(symbol=moeda, limit=1)
 
             if 'LIMIT' in self.order[0]["type"]:
@@ -73,5 +74,13 @@ class Usuario():                ## Classe que armazena dados referentes ao usuá
                 array_negociaveis.append(par)
         return array_negociaveis
                     
+    def verificar_gatilhos(self,moeda, gatilho, objeto_moeda):
+        from trade import Trade
+        if moeda in self.negociaveis:
+            if gatilho == 'BUY':
+                return Trade.comprar(moeda, self.saldo)
+            if gatilho == 'SELL':
+                return Trade.vender(moeda, self.saldo, objeto_moeda)
 
-
+    def atualizar_valores(self):
+        self.moeda, self.saldo_convertido, self.saldo = self.verificar_moeda_atual()
