@@ -1,5 +1,3 @@
-from class_usuario import Usuario
-
 
 class Trade():
 
@@ -7,52 +5,51 @@ class Trade():
         pass
     
     @classmethod
-    def comprar(self, moeda, saldo):
+    def comprar(self, moeda, quantidade, objeto_moeda):
         from class_usuario import client
-        from binance import exceptions
+        from decimal import Decimal as D
+        import time
         from binance.enums import (
-                ORDER_TYPE_LIMIT,
-                ORDER_TYPE_MARKET,
-                SIDE_BUY,
-                SIDE_SELL,
-                TIME_IN_FORCE_GTC,
-                TIME_IN_FORCE_IOC
-            )
+            ORDER_TYPE_LIMIT,
+            ORDER_TYPE_MARKET,
+            SIDE_BUY,
+            SIDE_SELL,
+            TIME_IN_FORCE_GTC,
+            TIME_IN_FORCE_IOC
+        )
 
-    
-        diminuir_valor = 0.990
-        _ = 0
+        info = client.get_symbol_info(moeda)
 
-        cont = 0
-        while _ == 0:
-            
-            diminuir_valor -= 0.003
+        price_filter = float(info['filters'][0]['tickSize'])
+        price = objeto_moeda.cotacao * 1.002
+        price = D.from_float(price).quantize(D(str(price_filter)))
+        minimum = float(info['filters'][1]['minQty'])
+        quant = D.from_float(quantidade).quantize(D(str(minimum)))
 
-            try: 
-                order = client.create_order(
-                symbol=moeda,
-                side=SIDE_BUY,
-                type=ORDER_TYPE_MARKET,
-                quoteOrderQty=f'{saldo * diminuir_valor:.4f}'
-                )
-                _ = 1
+        print("Preço e quantidade: ", price, quant)
 
-            except exceptions.BinanceAPIException:
-                print("Tentando comprar...")
-                cont += 1
+        client.create_order(
+        symbol=moeda,
+        side=SIDE_SELL,
+        type=ORDER_TYPE_LIMIT,
+        timeInForce=TIME_IN_FORCE_GTC,
+        price=f"{price}",
+        quantity=f"{quant}"
+        )
+        _ = True
+        while _:
 
-                if cont <= 30:
-                    continue
+            print('Ordem aberta...')
 
-                else: 
-                    order = client.create_order(
-                    symbol=moeda,
-                    side=SIDE_BUY,
-                    type=ORDER_TYPE_MARKET,
-                    quoteOrderQty=f'{float(saldo * diminuir_valor):.4f}'
-                    )
+            order = client.get_all_orders(symbol=moeda, limit=1)
+            print("Ordem: \n", order)
 
-        return order
+            if 'FILLED' in order[0]["status"]:
+                print("Trade concluído!\n")
+                _ = False
+            else:
+                time.sleep(10)
+
     
     @classmethod
     def vender(self, moeda, saldo, objeto_moeda):
@@ -72,7 +69,7 @@ class Trade():
         info = client.get_symbol_info(moeda)
 
         price_filter = float(info['filters'][0]['tickSize'])
-        price = cotacao * 0.995
+        price = objeto_moeda.cotacao * 0.997
         price = D.from_float(price).quantize(D(str(price_filter)))
         minimum = float(info['filters'][1]['minQty'])
         quant = D.from_float(saldo).quantize(D(str(minimum)))
@@ -94,7 +91,7 @@ class Trade():
             cotacao = objeto_moeda.cotar(moeda)
             print()
 
-            order = Usuario.client.get_all_orders(symbol=moeda, limit=1)
+            order = client.get_all_orders(symbol=moeda, limit=1)
             print("Ordem: \n", order)
 
             if cotacao > price:
@@ -136,3 +133,40 @@ class Trade():
         
         return json.loads(response.text)
     
+'''
+Média Móvel BNBETH | Menor = 0.17970800 | Maior = 0.17967778
+Média Móvel SOLBNB | Menor = 0.06434000 | Maior = 0.06424646
+Média Móvel ADABNB | Menor = 0.00112992 | Maior = 0.00112670
+Média Móvel SOLETH | Menor = 0.01156280 | Maior = 0.01154586
+Média Móvel ADAETH | Menor = 0.00020315 | Maior = 0.00020247
+Gatilho de venda para BNBETH
+Preço e quantidade:  0.1791 0.012
+Traceback (most recent call last):
+  File "/home/luiz/Documents/robo_cripto_python/main.py", line 51, in <module>
+    mercado_bnbeth = Situacao_Mercado(bnbETH)
+  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 4, in __init__
+    self.gatilho_trade(objeto_moeda)
+  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 7, in gatilho_trade
+    from main import usuario
+  File "/home/luiz/Documents/robo_cripto_python/main.py", line 51, in <module>
+    mercado_bnbeth = Situacao_Mercado(bnbETH)
+  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 4, in __init__
+    self.gatilho_trade(objeto_moeda)
+  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 19, in gatilho_trade
+    order = usuario.verificar_gatilhos(objeto_moeda.symbol, 'SELL', objeto_moeda)      
+  File "/home/luiz/Documents/robo_cripto_python/class_usuario.py", line 83, in verificar_gatilhos
+    return Trade.vender(moeda, self.saldo, objeto_moeda)
+  File "/home/luiz/Documents/robo_cripto_python/trade.py", line 84, in vender
+    client.create_order(
+  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 1397, in create_order
+    return self._post('order', True, data=params)
+  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 374, in _post
+    return self._request_api('post', path, signed, version, **kwargs)
+  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 334, in _request_api
+    return self._request(method, uri, signed, **kwargs)
+  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 315, in _request
+    return self._handle_response(self.response)
+  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 324, in _handle_response
+    raise BinanceAPIException(response, response.status_code, response.text)
+binance.exceptions.BinanceAPIException: APIError(code=-1013): Filter failure: MIN_NOTIONAL
+'''

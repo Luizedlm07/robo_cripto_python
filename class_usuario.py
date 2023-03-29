@@ -74,11 +74,11 @@ class Usuario():                ## Classe que armazena dados referentes ao usuá
                 array_negociaveis.append(par)
         return array_negociaveis
                     
-    def verificar_gatilhos(self,moeda, gatilho, objeto_moeda):
+    def verificar_gatilhos(self, moeda, quantity, gatilho, objeto_moeda):
         from trade import Trade
         if moeda in self.negociaveis:
             if gatilho == 'BUY':
-                return Trade.comprar(moeda, self.saldo)
+                return Trade.comprar(moeda, quantity, objeto_moeda)
             if gatilho == 'SELL':
                 return Trade.vender(moeda, self.saldo, objeto_moeda)
 

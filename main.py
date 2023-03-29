@@ -8,11 +8,11 @@ from par_moeda import Par_moeda
 from situacao_mercado import Situacao_Mercado
 
 
-relatorio_1 = open('relatorio.txt', 'w')
-relatorio_1.write("Hora atual, Cotação BNB, Cotação SOL, Cotação ADA, Posição, Lucro, Porcentagem de lucro, Lucro total\n")
-relatorio_1.close()
+
 
 print("Robô iniciado.\n")
+
+Relatorio()
 
 bnbETH = Par_moeda('BNBETH')
 solBNB = Par_moeda('SOLBNB')
@@ -48,8 +48,8 @@ while True:
         print(f"Média Móvel {solETH.symbol} | Menor = {solETH.mm_menor:.8f} | Maior = {solETH.mm_maior:.8f}")
         print(f"Média Móvel {adaETH.symbol} | Menor = {adaETH.mm_menor:.8f} | Maior = {adaETH.mm_maior:.8f}")
 
-        mercado_solbnb = Situacao_Mercado(solBNB)
         mercado_bnbeth = Situacao_Mercado(bnbETH)
+        mercado_solbnb = Situacao_Mercado(solBNB)
         mercado_adabnb = Situacao_Mercado(adaBNB)
         mercado_soleth = Situacao_Mercado(solETH)
         mercado_adaeth = Situacao_Mercado(adaETH)
@@ -69,7 +69,7 @@ while True:
         )
 
         contador += 1
-        print("O código rodou:", contador, "vez(es).")
+        print("O código rodou:", contador, "vez(es).\n")
 
         time.sleep(61)
 
