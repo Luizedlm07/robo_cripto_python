@@ -28,7 +28,7 @@ class Trade():
 
         print("Preço e quantidade: ", price, quant)
 
-        client.create_order(
+        client.create_test_order(
         symbol=moeda,
         side=SIDE_SELL,
         type=ORDER_TYPE_LIMIT,
@@ -76,7 +76,7 @@ class Trade():
 
         print("Preço e quantidade: ", price, quant)
 
-        client.create_order(
+        client.create_test_order(
         symbol=moeda,
         side=SIDE_SELL,
         type=ORDER_TYPE_LIMIT,
@@ -133,40 +133,3 @@ class Trade():
         
         return json.loads(response.text)
     
-'''
-Média Móvel BNBETH | Menor = 0.17970800 | Maior = 0.17967778
-Média Móvel SOLBNB | Menor = 0.06434000 | Maior = 0.06424646
-Média Móvel ADABNB | Menor = 0.00112992 | Maior = 0.00112670
-Média Móvel SOLETH | Menor = 0.01156280 | Maior = 0.01154586
-Média Móvel ADAETH | Menor = 0.00020315 | Maior = 0.00020247
-Gatilho de venda para BNBETH
-Preço e quantidade:  0.1791 0.012
-Traceback (most recent call last):
-  File "/home/luiz/Documents/robo_cripto_python/main.py", line 51, in <module>
-    mercado_bnbeth = Situacao_Mercado(bnbETH)
-  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 4, in __init__
-    self.gatilho_trade(objeto_moeda)
-  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 7, in gatilho_trade
-    from main import usuario
-  File "/home/luiz/Documents/robo_cripto_python/main.py", line 51, in <module>
-    mercado_bnbeth = Situacao_Mercado(bnbETH)
-  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 4, in __init__
-    self.gatilho_trade(objeto_moeda)
-  File "/home/luiz/Documents/robo_cripto_python/situacao_mercado.py", line 19, in gatilho_trade
-    order = usuario.verificar_gatilhos(objeto_moeda.symbol, 'SELL', objeto_moeda)      
-  File "/home/luiz/Documents/robo_cripto_python/class_usuario.py", line 83, in verificar_gatilhos
-    return Trade.vender(moeda, self.saldo, objeto_moeda)
-  File "/home/luiz/Documents/robo_cripto_python/trade.py", line 84, in vender
-    client.create_order(
-  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 1397, in create_order
-    return self._post('order', True, data=params)
-  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 374, in _post
-    return self._request_api('post', path, signed, version, **kwargs)
-  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 334, in _request_api
-    return self._request(method, uri, signed, **kwargs)
-  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 315, in _request
-    return self._handle_response(self.response)
-  File "/home/luiz/.local/lib/python3.10/site-packages/binance/client.py", line 324, in _handle_response
-    raise BinanceAPIException(response, response.status_code, response.text)
-binance.exceptions.BinanceAPIException: APIError(code=-1013): Filter failure: MIN_NOTIONAL
-'''

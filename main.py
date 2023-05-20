@@ -8,8 +8,6 @@ from par_moeda import Par_moeda
 from situacao_mercado import Situacao_Mercado
 
 
-
-
 print("Robô iniciado.\n")
 
 Relatorio()
